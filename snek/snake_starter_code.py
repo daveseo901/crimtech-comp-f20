@@ -141,7 +141,7 @@ def main():
 
         pygame.display.update()
         if snake.dead:
-            print(f'You died. Score: {score}')
+            print('You died. Score: %d' % score)
             pygame.quit()
             sys.exit(0)
 
