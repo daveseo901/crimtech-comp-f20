@@ -19,7 +19,7 @@ DIR = {
 
 class Snake(object):
     l = 1
-    body = [(WIDTH // 2, HEIGHT // 2)]
+    body = [(WIDTH // 2 + 1, HEIGHT // 2),(WIDTH // 2, HEIGHT // 2)]
     direction = 'r'
     dead = False
 

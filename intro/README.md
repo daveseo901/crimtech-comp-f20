@@ -8,6 +8,9 @@ After 2 weeks in (9/26), we will email only people who filled out the forms as t
 ## B. Make a GitHub account
 We will be communicating through GitHub. If you don't have a GitHub account, please sign up at [https://github.com/](https://github.com/) and come back.
 
+### B0. Windows User: Get WSL!
+Follow the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and get **Ubuntu**. Then, follow Richard's email to learn about how to setup a Windows-accessible folder in WSL. From here, use WSL instead of the command line!
+
 ### B1. Adding an SSH key.
 If you don't know what an ssh key is, follow these instructions. This step is tricky! **Feel free to call RX/ZS over.**
 
@@ -42,11 +45,8 @@ Type in `python --version`. If you get an error, you need to install Python: fol
 ### E1. MacOS
 If you are on MacOS, you should check out `homebrew`. The instruction for getting Python with homebrew is [here](https://docs.python-guide.org/starting/install3/osx/).
 
-### E2. Windows
-If you are on Windows, you should get `wsl`. Follow the instructions [here](https://docs.microsoft.com/en-us/windows/wsl/install-win10) and get **Ubuntu**. Once you are done, call Richard/Zuzanna over.
-
-### E3. Linux
-If you are using Linux, you can figure out how to install Python, right? ;)
+### E2. Linux
+You can download python from the website, or use `sudo apt-get install python3.6`.
 
 ## F. Install `pip`
 Type in `pip --version`. If you get an error, you need to install `pip`. Follow the instructions [here](https://pip.pypa.io/en/stable/installing/). Once you are done, put your pip version into `lab0-responses.txt`
@@ -64,7 +64,7 @@ At this step, Git may ask you to set your username/email. If so, follow those in
 The change you just made is still living on your local machine. How do you upload them to GitHub?
 Run the command `git push`. Then, go onto your github repository. You should see some changes there!
 
-## I. Subit
+## I. Submit
 There should be a button now called "pull request" or "make pull request". Click on it!
 
 Put in a title and a description, which can be anything you want. Then, hit "open pull request" or something like that.
