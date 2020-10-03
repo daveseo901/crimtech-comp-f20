@@ -1,6 +1,7 @@
 import random
 import pygame
 import sys
+from math import ceil, log
 
 # global variables
 WIDTH = 24
@@ -25,7 +26,7 @@ class Snake(object):
 
     def __init__(self):
         pass
-    
+
     def get_color(self, i):
         hc = (40,50,100)
         tc = (90,130,255)
@@ -35,30 +36,32 @@ class Snake(object):
         return self.body[0]
 
     def turn(self, dir):
-        # TODO: See section 3, "Turning the snake".
         self.direction = dir
         pass
 
     def collision(self, x, y):
-        # TODO: See section 2, "Collisions", and section 4, "Self Collisions"
-        head_coord = self.body[0]
-        if head_coord[0] > 23 or head_coord[0] < 0 or head_coord[1] > 23 or head_coord[1] < 0:
+        head_x = self.get_head()[0]
+        head_y = self.get_head()[1]
+        if head_x > 23 or head_x < 0 or head_y > 23 or head_y < 0 or (head_x == x and head_y == y):
             return True
         else:
             return False
-    
+
     def coyote_time(self):
         # TODO: See section 13, "coyote time".
         pass
 
     def move(self):
-        # TODO: See section 1, "Move the snake!". You will be revisiting this section a few times.
         to_add = DIR.get(self.direction)
-        for i in range(len(self.body)):
-            self.body[i] = tuple(map(sum, zip(self.body[i], to_add)))
-        if self.collision(0, 0):
-            self.kill()
-        pass
+        if self.l + 1 != len(self.body):
+            self.body.insert(0, tuple(map(sum, zip(self.body[0], to_add))))
+        else:
+            for i in range(self.l, 0, -1):
+                self.body[i] = self.body[i - 1]
+            self.body[0] = tuple(map(sum, zip(self.body[0], to_add)))
+        for i in range(1, len(self.body)):
+            if self.collision(self.body[i][0], self.body[i][1]):
+                self.kill()
 
     def kill(self):
         # TODO: See section 11, "Try again!"
@@ -80,7 +83,7 @@ class Snake(object):
             self.turn('l')
         if k == pygame.K_RIGHT:
             self.turn('r')
-    
+
     def check_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -89,10 +92,14 @@ class Snake(object):
             if event.type != pygame.KEYDOWN:
                 continue
             self.handle_keypress(event.key)
-    
+
     def wait_for_key(self):
-        # TODO: see section 10, "wait for user input".
-        pass
+        # Implementing feature #10
+        pygame.event.clear()
+        while True:
+            event = pygame.event.wait()
+            if event.type == pygame.KEYDOWN:
+                break
 
 
 # returns an integer between 0 and n, inclusive.
@@ -106,8 +113,13 @@ class Apple(object):
         self.place([])
 
     def place(self, snake):
-        # TODO: see section 6, "moving the apple".
-        pass
+        self.position = (rand_int(WIDTH - 1), rand_int(HEIGHT - 1))
+        i = 0
+        while i <= len(snake) - 1:
+            if snake[i] == self.position:
+                self.position = (rand_int(WIDTH), rand_int(WIDTH))
+                i = 0
+            i += 1
 
     def draw(self, surface):
         pos = (self.position[0] * SIZE, self.position[1] * SIZE)
@@ -136,18 +148,32 @@ def main():
 
     score = 0
 
+    thefont = pygame.font.SysFont("comic sans", 20)
+
+    # Implementing feature #10
+    snake.draw(surface)
+    apple.draw(surface)
+    screen.blit(surface, (0,0))
+    screen.blit(thefont.render("Press any key to begin", 1, (10, 10, 10)), (160, 160))
+    pygame.display.update()
+    snake.wait_for_key()
+
     while True:
-        # TODO: see section 10, "incremental difficulty".
-        clock.tick(10)
+        # Implementing feature #9
+        clock.tick(10 + ceil(2*log(snake.l)))
         snake.check_events()
-        draw_grid(surface)        
+        draw_grid(surface)
         snake.move()
 
         snake.draw(surface)
         apple.draw(surface)
-        # TODO: see section 5, "Eating the Apple".
+        if snake.get_head() == apple.position:
+            print("The snake ate an apple!")
+            apple.place(snake.body)
+            snake.l += 1
+            score += 1
         screen.blit(surface, (0,0))
-        # TODO: see section 8, "Display the Score"
+        screen.blit(thefont.render("Score: "+str(score), 1, (0, 0, 0)), (0, 0))
 
         pygame.display.update()
         if snake.dead:
