@@ -10,6 +10,19 @@ We have two classes within `snake.py`: a `Snake` class and an `Apple` class. The
 
 The snake's head body is represented by the `body` variable, which is a list containing the body from the head to the tail. So, `self.body[0]` would be referencing the head, and `self.body[:-1]` would reference everything except the tail.
 
+### The `main` function
+Here is what you need to understand about the main function:
+
+We have two objects, `snake` and `apple`, which store the state of the snake and the apple. The `while True` loop is run 10 times a second, because of the `clock.tick(10)`.
+
+During every loop, we perform the following actions:
+* Check if there was any keypress
+* Move the snake.
+* Draw the new snake and the new apple, then update the display.
+* Check if the snake is dead, and if so exit the game.
+
+The best time to check whether the snake ate an apple, as done in section 5, is after the snake has just moved.
+
 ## Required Features
 1. Move the snake!
 Let's get the snake moving! Change the `move` function so that it will move the snake 1 unit in the correct direction.
