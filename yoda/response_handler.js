@@ -20,6 +20,38 @@ let std_quotes = ["Patience you must have, my young padawan.",
 ];
 
 function respond() {
-    // Your Code Here
-    console.log("Hello World!");
+    let text = document.getElementById("instr").value
+    let name = names[randint(0, 1)]
+    let mood = moods[randint(0, 2)]
+    if (text.includes("cute") || text.includes("baby")) {
+        name = "cute"
+    }
+    if (text.includes("force")) {
+        mood = "force"
+        if (text.includes("dark")) {
+            mood = "dark"
+        }
+    }
+    let quote = std_quotes[randint(0, 4)]
+    let draw = randint(0, 2)
+    if (draw == 1) {
+        quote = force_quotes[randint(0, 4)]
+    }
+    if (draw == 2) {
+        quote = dark_quotes[randint(0, 4)]
+    }
+    if (name == "cute") {
+        let m = "m"
+        quote = "yes, h" + m.repeat(randint(2, 10))
+    }
+    let path = "img/" + name + "-" + mood + ".jpg"
+    document.getElementById("image").src = path
+    document.getElementById("caption").innerHTML = quote
+    console.log(text)
+}
+
+function randint(min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }

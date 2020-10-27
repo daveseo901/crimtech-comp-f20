@@ -8,13 +8,21 @@
     <script>
         console.log("You found me!");
         function square(i) {
-            // Your code here!
-            return 0
+            if (typeof i != "number") {
+                return -1
+            }
+            return i*i
         }
 
         function numberString(i) {
-            // Your code here!
-            return ""
+            if (Number.isInteger(i) == false || i < 1) {
+                return -1
+            }
+            var res = "1"
+            for (j = 2; j <= i; j++) {
+                res = res.concat(j.toString())
+            }
+            return res
         }
     </script>
 </body>
